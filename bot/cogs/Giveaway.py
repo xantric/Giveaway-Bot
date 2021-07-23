@@ -1,4 +1,3 @@
-from os import name
 import discord
 from discord.ext import commands
 import asyncio
@@ -15,7 +14,7 @@ alias = {
 class Giveaway(commands.Cog):
     def __init__(self,bot):
         self.bot = bot
-    
+
     def convert(self, time):
         unit = time[-1]
         if unit not in alias.keys():
@@ -26,8 +25,7 @@ class Giveaway(commands.Cog):
             return -2
         return val * alias[unit]
 
-    
-    
+
     @commands.command(name="ping")
     async def _ping(self,ctx):
         em = discord.Embed(title="Latency",color=discord.Color.random())
@@ -175,5 +173,6 @@ class Giveaway(commands.Cog):
             end  = datetime.datetime.utcnow() + datetime.timedelta(seconds=time)
             end = datetime.datetime.strftime(end,"%d %b %Y %I:%M %p")
             await self.gend(msg,em,winners,message,gchannel,end)
+            
 def setup(bot):
     bot.add_cog(Giveaway(bot))

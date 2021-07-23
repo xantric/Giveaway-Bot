@@ -1,6 +1,6 @@
 from bot import GiveawayBot
 
-VERSION = '0.0.1'
+VERSION = '0.0.2'
 
 def main():
     bot=GiveawayBot()

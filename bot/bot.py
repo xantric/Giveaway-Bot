@@ -1,6 +1,7 @@
 from pathlib import Path 
 import discord
 from discord.ext import commands
+import sqlite3
 class GiveawayBot(commands.Bot):
     def __init__(self):
         self._cogs=[p.stem for p in Path(".").glob("./bot/cogs/*.py")]
@@ -25,4 +26,11 @@ class GiveawayBot(commands.Bot):
     async def on_ready(self):
         print(f"Bot ready.")
     async def prefix(self,bot,msg):
-        return commands.when_mentioned_or("?")(bot,msg)
+        db = sqlite3.connect("Config.db")
+        cursor = db.cursor()
+        x = cursor.execute(f"SELECT prefix FROM config WHERE guild_id = {msg.guild.id}")
+        y = x.fetchone()
+        if y == None:
+            return commands.when_mentioned_or("g!")(bot,msg)
+        else:
+            return commands.when_mentioned_or(y[0],"g!")(bot,msg)
